@@ -62,6 +62,5 @@ char lisp_get_symbol(const char* name,
                      void** ret_data,
                      char is_local);
 
-void print_atom(lisp_atom* atom);
 
 #endif

@@ -76,11 +76,13 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lisp_access.h" />
     <ClInclude Include="lisp_base.h" />
-    <ClInclude Include="lisp_cond.h" />
+    <ClInclude Include="lisp_cmp.h" />
     <ClInclude Include="lisp_defs.h" />
     <ClInclude Include="lisp_eval.h" />
     <ClInclude Include="lisp_flow.h" />
+    <ClInclude Include="lisp_io.h" />
     <ClInclude Include="lisp_math.h" />
     <ClInclude Include="lisp_reader.h" />
     <ClInclude Include="lisp_symanip.h" />
@@ -90,11 +92,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lisp.cpp" />
+    <ClCompile Include="lisp_access.cpp" />
     <ClCompile Include="lisp_base.cpp" />
-    <ClCompile Include="lisp_cond.cpp" />
+    <ClCompile Include="lisp_cmp.cpp" />
     <ClCompile Include="lisp_defs.cpp" />
     <ClCompile Include="lisp_eval.cpp" />
     <ClCompile Include="lisp_flow.cpp" />
+    <ClCompile Include="lisp_io.cpp" />
     <ClCompile Include="lisp_math.cpp" />
     <ClCompile Include="lisp_reader.cpp" />
     <ClCompile Include="lisp_symanip.cpp" />

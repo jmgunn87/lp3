@@ -3,4 +3,6 @@
 
 #pragma once
 
+void load_flow();
+
 #endif

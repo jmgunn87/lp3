@@ -31,7 +31,7 @@ void lisp_repl()
         lisp_eval((lisp_atom*)sle->_data,sle->_next);
         sle=sle->_next;
       }
-      print_atom(result_stack->_head?(lisp_atom*)result_stack->_head->_data:0);
+      slist_destroy(result_stack);
       result_stack=new_slist();
     }
     else printf("list error!");
@@ -57,12 +57,10 @@ int lp3_process(char* str)
       lisp_eval((lisp_atom*)sle->_data,sle->_next);
       sle=sle->_next;
     }
-    print_atom(result_stack->_head?(lisp_atom*)result_stack->_head->_data:0);
+    slist_destroy(result_stack);
     result_stack=new_slist();
   }
-  else
-    printf("list error!");
-   
+  else printf("list error!"); 
   return pos;
 }
 
@@ -77,7 +75,7 @@ int lp3_gen_file(const char* lp3_in,
   long result=0;
 
   fin=fopen(lp3_in,"r+");
-  fout=freopen(lp3_out,"w",stderr);
+  fout=freopen(lp3_out,"w",stdout);
   if(!fin||!fout)
     return -1;
 
@@ -88,6 +86,7 @@ int lp3_gen_file(const char* lp3_in,
 
   // allocate memory to contain the whole file:
   buffer=(char*)malloc(sizeof(char)*size);
+
   // copy the file into the buffer:
   result=fread(buffer,1,size,fin);
   buffer[result]='\0';
@@ -125,13 +124,14 @@ int lp3_gen_file(const char* lp3_in,
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-  int auth=getchar();
+  int auth=0;
   char name[256];
   memset((void*)name,0,256);
 
   load_lisplib();
   
   /*install a dummy variable*/
+  auth=getchar();
   if(!isdigit(auth))
     auth=0;
   lisp_install_symbol("authorized",new_atom(LTINT,(void*)&auth),0);
@@ -139,9 +139,9 @@ int _tmain(int argc, _TCHAR* argv[])
   gets(name);
   lisp_install_symbol("author",new_atom(LTSTR,(void*)&name),0);
 
-  
-  lp3_gen_file((const char*)"C:\\Users\\Kerry\\Documents\\lp3.txt",
-               (const char*)"C:\\Users\\Kerry\\Documents\\lp3out.txt");
+  lp3_gen_file((const char*)"C:\\Users\\Kerry\\Documents\\lp3.txt",//input template
+               (const char*)"C:\\Users\\Kerry\\Documents\\lp3out.txt");//output generated file
+
   system("PAUSE");
 	return 0;
 }

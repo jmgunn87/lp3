@@ -27,9 +27,6 @@
     <ClInclude Include="lisp_base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lisp_cond.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lisp_defs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,6 +48,15 @@
     <ClInclude Include="slist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lisp_cmp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lisp_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lisp_access.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -60,9 +66,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lisp_base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lisp_cond.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lisp_defs.cpp">
@@ -84,6 +87,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="slist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lisp_cmp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lisp_io.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lisp_access.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

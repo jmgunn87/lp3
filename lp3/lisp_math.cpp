@@ -6,15 +6,19 @@ static char _loaded=0;
 
 typedef enum _MATH_OP
 {
- LM_MULT=1,
- LM_ADD=2,
- LM_DIV=3,
- LM_SUB=4,
- LM_MOD=5
+  LM_MULT=1,
+  LM_ADD=2,
+  LM_DIV=3,
+  LM_SUB=4,
+  LM_MOD=5
 
 } MATH_OP;
 
-static int eval_operand(lisp_atom* atom)
+/*******************************************
+ * This function extracts from an atom and *
+ * return int data from it
+ *******************************************/
+static int eval_operand_int(lisp_atom* atom)
 {
   int t=0;
 
@@ -25,7 +29,7 @@ static int eval_operand(lisp_atom* atom)
   else if(atom->type==LTID)
     if(!lisp_get_symbol((const char*)atom->data,(void**)&atom,0))
       return 0;
-    else return eval_operand(atom);
+    else return eval_operand_int(atom);
   else if(atom->type==LTLIST)
   {
     lisp_eval(atom,0);
@@ -56,7 +60,7 @@ static int lp_math_eval(slist_elem* next,
 
   while(next)
   {   
-    operand=eval_operand(ATOM_CAST(next));
+    operand=eval_operand_int(ATOM_CAST(next));
     switch(_operator)
     {
       case LM_MULT:
@@ -96,10 +100,10 @@ static int lp_math_eval(slist_elem* next,
      in that id. */
   if(modifier)
   {
-    slist_push(result_stack,(void*)new_atom(LTID,modifier->data));
+    PUSH_STACK_RESULT(LTID,modifier->data);
     if(lisp_get_symbol((const char*)modifier->data,(void**)&modifier,0))
       *(int*)(*modifier).data=*sum;
-  }else slist_push(result_stack,(void*)new_atom(LTINT,(void*)sum));
+  }else PUSH_STACK_RESULT(LTINT,sum);
 
   return swallowed;
 }
