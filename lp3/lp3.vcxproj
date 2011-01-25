@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lisp_access.h" />
+    <ClInclude Include="lisp_array.h" />
     <ClInclude Include="lisp_base.h" />
     <ClInclude Include="lisp_cmp.h" />
     <ClInclude Include="lisp_defs.h" />
@@ -93,6 +94,7 @@
   <ItemGroup>
     <ClCompile Include="lisp.cpp" />
     <ClCompile Include="lisp_access.cpp" />
+    <ClCompile Include="lisp_array.cpp" />
     <ClCompile Include="lisp_base.cpp" />
     <ClCompile Include="lisp_cmp.cpp" />
     <ClCompile Include="lisp_defs.cpp" />

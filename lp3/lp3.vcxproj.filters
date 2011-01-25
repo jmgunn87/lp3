@@ -57,6 +57,9 @@
     <ClInclude Include="lisp_access.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lisp_array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lisp_access.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lisp_array.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

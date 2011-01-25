@@ -54,7 +54,8 @@ static int lisp_eval_fun_or_macro(lisp_atom* atom,
 
   /* now eval the body */
   body=((slist*)sle->_next->_next->_data)->_head;
-  if(!body)return 0;
+  if(!body)
+    return 0;
   lisp_eval(ATOM_CAST(body),body->_next);
 
   return list_position;
@@ -70,7 +71,6 @@ int lisp_eval(lisp_atom* atom,
 
   if(!atom)
     return 0;
-
   while(atom&&atom->data)
     switch(atom->type)
     {
@@ -94,7 +94,6 @@ int lisp_eval(lisp_atom* atom,
       return 0;
     default:
       return 0;
-    }
-  return 0;
+    }return 0;
 }
 

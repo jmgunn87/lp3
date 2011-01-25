@@ -26,6 +26,10 @@ static int lp_echo(slist_elem* next)
         break;
       case LTFLOAT:fprintf(stdout,"%f",*(float*)ATOM_CAST(next)->data);
         break;
+      case LTLIST:
+        lisp_eval(ATOM_CAST(next),0);
+        printf("%d\n",PEEK_STACK_RESULT(0));
+        break;
       case LTLISPFN:fprintf(stdout,"%s",(char*)((slist*)ATOM_CAST(next)->data)->_head->_data);
         break;
       case LTLISPMACRO:fprintf(stdout,"%s",(char*)((slist*)ATOM_CAST(next)->data)->_head->_data);

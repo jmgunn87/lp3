@@ -11,8 +11,8 @@
 #define IS_LTYPE(a,t)( ((lisp_atom*)a)->type==t )
 #define ATOM_CAST(sle)( ((lisp_atom*)sle->_data) )
 #define PUSH_STACK_RESULT(id,val)( slist_push(result_stack,(void*)new_atom(id,(void*)val)) )
-#define PEEK_STACK_RESULT(count)( ((list_atom*)slist_peekn(result_stack,count)) )
-#define POP_STACK_RESULT(count)( ((list_atom*)slist_pop(result_stack)) )
+#define PEEK_STACK_RESULT(count)( ((lisp_atom*)slist_peekn(result_stack,count)) )
+#define POP_STACK_RESULT(count)( ((lisp_atom*)slist_pop(result_stack)) )
 
 typedef enum _LISP_TYPE
 {
