@@ -2,9 +2,9 @@
 #define LISP_EVAL_H
 
 #pragma once
-#include "lisp_defs.h"
+#include "lisp_reader.h"
 
-int lisp_eval(lisp_atom* atom,
-              slist_elem* next);
+lisp_atom lisp_eval(lisp_atom* atom,
+                    slist_elem* next);
 
 #endif

@@ -1,18 +1,9 @@
 #pragma once
 #include "stdafx.h"
-#include "lisp_defs.h"
-#include "lisp_base.h"
+#include "lisp_symtbl.h"
 
-lisp_atom* new_atom(LISP_TYPE type, void* data)
-{
-  lisp_atom* la=(lisp_atom*)malloc(sizeof(lisp_atom));
-  la->type=type;
-  la->data=data;
-  return la;
-}
-
+slist* local_symtbl[LOCAL_SYM_BUCKETS];
 slist* lisp_symtbl[SYMTBL_BUCKETS];
-extern slist* local_symtbl[LOCAL_SYM_BUCKETS];
 
 typedef struct _ht_entry
 {

@@ -1,15 +1,9 @@
+#pragma once
 #include "stdafx.h"
 #include "lisp_reader.h"
 
 /**********************************************
- * global results pointer                     *
- **********************************************/
-slist* result_stack=0;
-slist* local_vars=0;
-slist* local_symtbl[LOCAL_SYM_BUCKETS];
-
-/**********************************************
- * Parser configurations                      *
+ * parser configurations                      *
  *--------------------------------------------*
  **********************************************/
 #define ACCEPT 17
@@ -270,63 +264,6 @@ static int lisp_lex_token(lp_token* token,
   return -1;
 }
 
-slist* plisp(const char* input)
-{
-  slist* root=0;
-  slist* stack=0;
-  lp_token lexed;
-  int nest_depth=0;
-  int str_inc=0;
-  int ipos=0;
-
-  if(!input)
-    return 0;
-
-  str_inc=lisp_lex_token(&lexed,(const char*)&input[ipos]);
-  if(str_inc==-1)
-    return 0;
-  root=new_slist();
-  stack=new_slist();
-  slist_push(stack,(void*)root);
-  ++nest_depth;
-
-  while(nest_depth)
-  {
-    /* lex */
-    str_inc=lisp_lex_token(&lexed,(const char*)&input[ipos]);
-    if(str_inc==-1)
-      return 0;
-
-    switch(lexed.lex_id)
-    {
-      case LPAREN:
-        slist_push(stack,(void*)new_atom(LTLIST,(void*)new_slist()));
-        ++nest_depth;
-        break;
-      case RPAREN:
-        stack=(slist*)slist_peekn(stack,nest_depth);
-        --nest_depth;
-        break;
-      case LTID:
-        slist_append(stack,(void*)new_atom(LTID,lexed.lex_val));
-        break;
-      case LTSTR:
-        slist_append(stack,(void*)new_atom(LTID,lexed.lex_val));
-        break;
-      case LTINT:
-        slist_append(stack,(void*)new_atom(LTID,lexed.lex_val));
-        break;
-      case LTFLOAT:
-        slist_append(stack,(void*)new_atom(LTID,lexed.lex_val));
-        break;
-      default:
-        break;
-    }
-    /* update the string position */
-    ipos+=str_inc;
-  }
-  return root;
-}
 slist* parse_lisp(const char* input,
                   int* input_pos)
 {
@@ -336,12 +273,6 @@ slist* parse_lisp(const char* input,
 
   if(!input)
     return 0;
-
-  if(!result_stack||!local_vars)
-  {
-    result_stack=new_slist();
-    local_vars=new_slist();
-  }
 
   /*make sure the parse stack is initialized and
     that the its cursor is reset(-1)*/

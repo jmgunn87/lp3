@@ -2,9 +2,7 @@
 #define LISP_READER_H
 
 #pragma once
-#include "slist.h"
-#include "lisp_defs.h"
-#include "lisp_eval.h"
+#include "lisp_types.h"
 
 #define LPAREN 6
 #define RPAREN 7
