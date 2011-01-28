@@ -48,17 +48,6 @@ static lisp_atom lp_defun_or_macro(slist_elem* next,
 static lisp_atom lp_defun(slist_elem* next){return lp_defun_or_macro(next,1);}
 static lisp_atom lp_defmacro(slist_elem* next){return lp_defun_or_macro(next,0);}
 
-//
-//static int lp_undef(slist_elem* next)
-//{
-//  if(!next)
-//    return 0;
-//  if(IS_LTYPE(next->_data,LTID))
-//    if(lisp_uninstall_symbol((const char*)ATOM_CAST(next)->data,0))
-//      return 1;
-//  return 0;
-//}
-
 static lisp_atom lp_defvar(slist_elem* next)
 {
   lisp_atom atom;
@@ -87,39 +76,78 @@ static lisp_atom lp_setf(slist_elem* next)
       }
   return ret;
 }
-//static int lp_let(slist_elem* next){return 0;}
-//static int lp_defp(slist_elem* next)
-//{
-//  int* res=(int*)malloc(sizeof(int));
-//  *res=1;
-//
-//  if(!next)
-//  {
-//    *res=0;
-//    slist_push(result_stack,(void*)new_atom(LTINT,(void*)res));
-//    return 0;
-//  }
-//
-//  if(ATOM_CAST(next)->type!=LTID||
-//     !lisp_get_symbol((const char*)ATOM_CAST(next)->data,0,0)&&
-//     !lisp_get_symbol((const char*)ATOM_CAST(next)->data,0,1))
-//  {
-//    *res=0;
-//    slist_push(result_stack,(void*)new_atom(LTINT,(void*)res));
-//  }
-//  else
-//    slist_push(result_stack,(void*)new_atom(LTINT,res));
-//
-//  return 1;
-//}
+static lisp_atom lp_exists(slist_elem* next)
+{
+  lisp_atom ret;
+  ret.type=LTTRUE;
+  ret.data=(void*)LTTRUE;
 
+  while(next)
+  {
+    if(ATOM_CAST(next)->type!=LTID||
+       !lisp_get_symbol((const char*)ATOM_CAST(next)->data,0,0)&&
+       !lisp_get_symbol((const char*)ATOM_CAST(next)->data,0,1))
+    {
+      ret.type=LTNIL;
+      ret.data=(void*)LTNIL;
+      return ret;
+    } 
+    next=next->_next;
+  }
+  return ret;
+}
+static lisp_atom lp_undefine(slist_elem* next)
+{
+  lisp_atom* atom=0;
+  lisp_atom ret;
+  ret.type=LTNIL;
+  ret.data=(void*)LTNIL;
+
+  while(next)
+  {
+    /* try and retrieve the symbol */
+    if(IS_LTYPE(next->_data,LTID))
+    {
+      if(lisp_get_symbol((const char*)ATOM_CAST(next)->data,(void**)&atom,0)||
+         lisp_get_symbol((const char*)ATOM_CAST(next)->data,(void**)&atom,1))
+      {
+        if(lisp_uninstall_symbol((const char*)ATOM_CAST(next)->data,0)||
+           lisp_uninstall_symbol((const char*)ATOM_CAST(next)->data,0))
+        {
+          atom_destroy(atom);
+        }
+        else return ret;
+      }else return ret;
+    }else return ret;
+    next=next->_next;
+  }
+
+  ret.type=LTTRUE;
+  ret.data=(void*)LTTRUE;
+  return ret;
+}
+static lisp_atom lp_destroy(slist_elem* next)
+{
+  lisp_atom ret;
+  ret.type=LTTRUE;
+  ret.data=(void*)LTTRUE;
+
+  while(next)
+  {
+    atom_destroy(ATOM_CAST(next));
+    next=next->_next;
+  }
+  return ret;
+}
 void load_symanip()
 {
-  //lisp_install_symbol("defp",(void*)new_atom(LTCFNPTR,(void*)&lp_defp),0);
-  lisp_install_symbol("defmacro",(void*)new_atom(LTCFNPTR_NE,(void*)new_lisp_cfn(3,&lp_defmacro)),0);
-  lisp_install_symbol("defun",(void*)new_atom(LTCFNPTR_NE,(void*)new_lisp_cfn(3,&lp_defun)),0);
-  lisp_install_symbol("defvar",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(2,&lp_defvar)),0);
-  //lisp_install_symbol("undef",(void*)new_atom(LTCFNPTR,(void*)&lp_undef),0);
-  lisp_install_symbol("set",(void*)new_atom(LTCFNPTR_NE,(void*)new_lisp_cfn(2,lp_setf)),0);
+  //remember
+  lisp_install_symbol("destroy",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,1,CFN_ARGNOCIEL,&lp_destroy)),0);
+  lisp_install_symbol("forget",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,1,CFN_ARGNOCIEL,&lp_undefine)),0);
+  lisp_install_symbol("exists",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,1,CFN_ARGNOCIEL,&lp_exists)),0);
+  lisp_install_symbol("macro",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,3,3,&lp_defmacro)),0);
+  lisp_install_symbol("process",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,3,3,&lp_defun)),0);
+  lisp_install_symbol("variable",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,2,2,&lp_defvar)),0);
+  lisp_install_symbol("is",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,2,2,lp_setf)),0);
 //  lisp_install_symbol("let",(void*)new_atom(LTCFNPTR,(void*)&lp_let),0);
 }

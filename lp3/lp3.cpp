@@ -4,11 +4,13 @@
 #include "stdafx.h"
 #include "lisp_eval.h"
 #include "lisp_cmp.h"
-#include "lisp_flow.h"
+#include "lisp_cntrl.h"
 #include "lisp_math.h"
 #include "lisp_symanip.h"
 #include "lisp_mem.h"
 #include "lisp_io.h"
+#include "lisp_access.h"
+#include "lisp_utils.h"
 
 /* REPL */
 void lisp_repl()
@@ -21,7 +23,7 @@ void lisp_repl()
   lisp_atom ret;
 
    /*open the console get some lists*/
-  printf("-= LP3 REPL =-\r\n");
+  printf("ReadEvalPrintLoop\r\n");
   console=fopen("CON","r");
   while(1)
   {
@@ -36,31 +38,31 @@ void lisp_repl()
       {
         ret=lisp_eval((lisp_atom*)sle->_data,sle->_next);
         sle=sle->_next;
-        switch(ret.type)
-        {
-        case LTTRUE:
-          printf("T\n");
-          break;
-        case LTNIL:
-          printf("NIL\n");
-          break;
-        case LTINT:
-          printf("%d\n",*(int*)ret.data);
-          break;
-        case LTFLOAT:
-          printf("%f\n",*(float*)ret.data);
-          break;
-        case LTID:
-        case LTSTR:
-          printf("%s\n",(char*)ret.data);
-          break;
-        default:
-          break;
-        }
+        //switch(ret.type)
+        //{
+        //case LTTRUE:
+        //  printf("T\n");
+        //  break;
+        //case LTNIL:
+        //  printf("NIL\n");
+        //  break;
+        //case LTINT:
+        //  printf("%d\n",*(int*)ret.data);
+        //  break;
+        //case LTFLOAT:
+        //  printf("%f\n",*(float*)ret.data);
+        //  break;
+        //case LTID:
+        //case LTSTR:
+        //  printf("%s\n",(char*)ret.data);
+        //  break;
+        //default:
+        //  break;
+        //}
         printf("\n");
       }
     }
-    else printf("list error!");
+    else printf("syntax error: parenthesis unbalanced \n");
   }
 }
 
@@ -181,6 +183,9 @@ int _tmain(int argc, _TCHAR* argv[])
   load_cmp();
   load_flow();
   load_io();
+  load_access();
+  load_utils();
+
   lisp_repl();
   
   

@@ -123,10 +123,16 @@ static lisp_atom lp_geq(slist_elem* next){return lp_cmp(next,CMP_GEQ);}
 
 void load_cmp()
 {
-  lisp_install_symbol("=",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_eq)),0);
-  lisp_install_symbol("!=",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_neq)),0);
-  lisp_install_symbol("<",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_lt)),0);
-  lisp_install_symbol("<=",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_leq)),0);
-  lisp_install_symbol(">",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_gt)),0);
-  lisp_install_symbol(">=",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_geq)),0);
+  lisp_install_symbol("=",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_eq)),0);
+  lisp_install_symbol("equal",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_eq)),0);
+  lisp_install_symbol("~=",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_neq)),0);
+  lisp_install_symbol("unequal",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_neq)),0);
+  lisp_install_symbol("<",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_lt)),0);
+  lisp_install_symbol("less",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_lt)),0);
+  lisp_install_symbol("<=",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_leq)),0);
+  lisp_install_symbol("less-or-equal",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_leq)),0);
+  lisp_install_symbol(">",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_gt)),0);
+  lisp_install_symbol("greater",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_gt)),0);
+  lisp_install_symbol(">=",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_geq)),0);
+  lisp_install_symbol("greater-or-equal",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_geq)),0);
 }

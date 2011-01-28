@@ -2,18 +2,7 @@
 #include "stdafx.h"
 #include "lisp_array.h"
 
-lisp_array* new_lisp_array(LISP_TYPE type,
-                           int length,
-                           void* data)
-{
-  lisp_array* la=(lisp_array*)malloc(sizeof(lisp_array));
-  la->type=type;
-  la->length=length;
-  if(!data)  
-    la->data=calloc(length,sizeof(void*));
-  else la->data=data;
-  return la;
-}
+
 
 void array_type_depth(const lisp_array* larray,
                       LISP_TYPE* type,
@@ -62,8 +51,7 @@ void* array_at(lisp_array* la,
     case LTSTR:return (void*)&((char**)la->data)[index];
     case LTINT:return (void*)&((int*)la->data)[index];
     case LTFLOAT:return (void*)&((float*)la->data)[index];
-    case LTBOOLEAN:return (void*)&((char*)la->data)[index];
-    case LTARRAY:return (void*)((lisp_array**)la->data)[index];
+    //case LTARRAY:return (void*)((lisp_array**)la->data)[index];
     case LTLIST:return (void*)((slist**)la->data)[index];
     case LTLISPFN:return (void*)((slist**)la->data)[index];
     case LTLISPMACRO:return (void*)((slist**)la->data)[index];

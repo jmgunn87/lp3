@@ -6,9 +6,6 @@
 
 #define IS_LTYPE(a,t)( ((lisp_atom*)a)->type==t )
 #define ATOM_CAST(sle)( ((lisp_atom*)sle->_data) )
-#define PUSH_STACK_RESULT(id,val)( slist_push(result_stack,(void*)new_atom(id,(void*)val)) )
-#define PEEK_STACK_RESULT(count)( ((lisp_atom*)slist_peekn(result_stack,count)) )
-#define POP_STACK_RESULT(count)( ((lisp_atom*)slist_pop(result_stack)) )
 
 typedef enum _LISP_TYPE
 {
@@ -22,8 +19,7 @@ typedef enum _LISP_TYPE
   LTLISPFN=14,
   LTLISPMACRO=15,
   LTARRAY=16,
-  LTCFNPTR_NE=17,
-  LTCFNPTR=18,
+  LTCFNPTR=17,
 
 } LISP_TYPE;
 
@@ -36,18 +32,23 @@ typedef struct _lisp_atom
 
 lisp_atom* new_atom(LISP_TYPE type, void* data);
 lisp_atom* atom_copy(lisp_atom* atom);
+void atom_destroy(lisp_atom* atom);
 
-#define ARG_ONETOMANY -1
-#define ARG_ZEROTOMANY -2
+#define CFN_ARGNOCIEL -1
 
 typedef lisp_atom(*cfnptr)(slist_elem*);
+
 typedef struct _lisp_cfn
 {
-  int argc;
+  char eval_args;//0 = dont eval, 1+ = eval
+  int argc_floor;//0 to *
+  int argc_ciel;//0 to ARGNOCIEL
   cfnptr its_fnptr;
 } lisp_cfn;
 
-lisp_cfn* new_lisp_cfn(int argc,
+lisp_cfn* new_lisp_cfn(char eval,
+                       int floor,
+                       int ciel,
                        cfnptr fnptr);
 
 

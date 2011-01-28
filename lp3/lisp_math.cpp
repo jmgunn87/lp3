@@ -66,9 +66,9 @@ static lisp_atom lp_mod(slist_elem* next){return lp_math_eval(next,LM_MOD);}
 
 void load_math_module()
 {
-  lisp_install_symbol("*",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_mult)),0);
-  lisp_install_symbol("+",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_add)),0);
-  lisp_install_symbol("/",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_div)),0);
-  lisp_install_symbol("-",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_sub)),0);
-  lisp_install_symbol("%",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ONETOMANY,lp_mod)),0);
+  lisp_install_symbol("*",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_mult)),0);
+  lisp_install_symbol("+",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_add)),0);
+  lisp_install_symbol("/",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_div)),0);
+  lisp_install_symbol("-",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_sub)),0);
+  lisp_install_symbol("%",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_mod)),0);
 }

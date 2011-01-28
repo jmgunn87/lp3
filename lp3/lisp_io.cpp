@@ -19,6 +19,12 @@ static lisp_atom lp_echo(slist_elem* next)
     atom=ATOM_CAST(next);
     switch(atom->type)
     {
+      case LTTRUE:
+        fprintf(lp_stream,"T");
+        break;
+      case LTNIL:
+        fprintf(lp_stream,"NIL");
+        break;
       case LTID:
         if(lisp_get_symbol((const char*)atom->data,(void**)&atom,0))
           continue;
@@ -97,7 +103,7 @@ static lisp_atom lp_close_stream(slist_elem* next)
 
 void load_io()
 {
-  lisp_install_symbol("echo",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(ARG_ZEROTOMANY,lp_echo)),0);
-  lisp_install_symbol("set-stream",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(2,lp_set_stream)),0);
-  lisp_install_symbol("close-stream",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,lp_close_stream)),0);
+  lisp_install_symbol("write",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_echo)),0);
+  lisp_install_symbol("set-stream",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,2,2,lp_set_stream)),0);
+  lisp_install_symbol("close-stream",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,0,lp_close_stream)),0);
 }

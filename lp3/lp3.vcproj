@@ -171,15 +171,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\lisp_access.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\lisp_array.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\lisp_cmp.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\lisp_eval.cpp"
+				RelativePath=".\lisp_cntrl.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\lisp_flow.cpp"
+				RelativePath=".\lisp_eval.cpp"
 				>
 			</File>
 			<File
@@ -192,6 +200,10 @@
 			</File>
 			<File
 				RelativePath=".\lisp_mem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\lisp_pred.cpp"
 				>
 			</File>
 			<File
@@ -249,15 +261,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\lisp_access.h"
+				>
+			</File>
+			<File
+				RelativePath=".\lisp_array.h"
+				>
+			</File>
+			<File
 				RelativePath=".\lisp_cmp.h"
 				>
 			</File>
 			<File
-				RelativePath=".\lisp_eval.h"
+				RelativePath=".\lisp_cntrl.h"
 				>
 			</File>
 			<File
-				RelativePath=".\lisp_flow.h"
+				RelativePath=".\lisp_eval.h"
 				>
 			</File>
 			<File
@@ -270,6 +290,10 @@
 			</File>
 			<File
 				RelativePath=".\lisp_mem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\lisp_pred.h"
 				>
 			</File>
 			<File

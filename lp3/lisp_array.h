@@ -2,19 +2,8 @@
 #define LISP_ARRAY_H
 
 #pragma once
-#include "lisp_base.h"
+#include "lisp_types.h"
 
-typedef struct _lisp_array
-{
-  LISP_TYPE type;
-  unsigned int length;
-  void* data;
-
-} lisp_array;
-
-lisp_array* new_lisp_array(LISP_TYPE type,
-                           int length,
-                           void* data);
 void array_type_depth(const lisp_array* larray,
                       LISP_TYPE* type,
                       int* depth);

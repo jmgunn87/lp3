@@ -75,43 +75,22 @@ lisp_atom lisp_eval(lisp_atom* atom,
     //    next=next->_next;
     //  }
     //  return lisp_eval_fun_or_macro(atom,start,0);
-    case LTCFNPTR_NE:
-      lcfn=(lisp_cfn*)atom->data;
-      start=next;/* no argument evaluation*/
-      while(next)
-      {
-        next=next->_next;
-        ++argcount;
-      }
-      /* now validate that we have the right number of args*/
-      if(lcfn->argc==ARG_ZEROTOMANY)
-        return lcfn->its_fnptr(start);
-      else if(lcfn->argc==ARG_ONETOMANY)
-        if(argcount<1)
-          return ret_atom;
-        else return lcfn->its_fnptr(start);
-      else if(argcount!=lcfn->argc)
-        return ret_atom;
-      else return lcfn->its_fnptr(start);
     case LTCFNPTR:
       lcfn=(lisp_cfn*)atom->data;
       start=next;
-      while(next)/* eval arguments before a call */
+      while(next)/* eval arguments before a call if specified */
       {
-        *ATOM_CAST(next)=lisp_eval(ATOM_CAST(next),next->_next);
+        if(lcfn->eval_args)
+          *ATOM_CAST(next)=lisp_eval(ATOM_CAST(next),next->_next);
         next=next->_next;
         ++argcount;
       }
       /* now validate that we have the right number of args*/
-      if(lcfn->argc==ARG_ZEROTOMANY)
-        return lcfn->its_fnptr(start);
-      else if(lcfn->argc==ARG_ONETOMANY)
-        if(argcount<1)
-          return ret_atom;
-        else return lcfn->its_fnptr(start);
-      else if(argcount!=lcfn->argc)
-        return ret_atom;
-      else return lcfn->its_fnptr(start);
+      if(argcount>=lcfn->argc_floor)
+        if(lcfn->argc_ciel==CFN_ARGNOCIEL||
+           argcount<=lcfn->argc_ciel)
+          return lcfn->its_fnptr(start);
+      return ret_atom;
     default:
       ret_atom=*atom;
       return ret_atom;
