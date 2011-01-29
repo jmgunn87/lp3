@@ -41,25 +41,35 @@ static lisp_atom lp_at(slist_elem* next)
       }
       return ret;
     case LTARRAY:
-      //tarr=(lisp_array*)la->data;
-      //if(tarr->type!=LTARRAY)
-      //  PUSH_STACK_RESULT(tarr->type,array_at(tarr,index));
-      //else
-      //{
-      //  next=next->_next;
-      //  tarr=(lisp_array*)array_at(tarr,index);
-      //  while(tarr&&tarr->type==LTARRAY)
-      //  {
-      //    next=next->_next;
-      //    if(next&&ATOM_CAST(next)->type==LTINT)
-      //      index=*(int*)ATOM_CAST(next)->data;
-      //    else break;
-      //    tarr=(lisp_array*)array_at(tarr,index);
-      //  }
-      //  if(tarr)
-      //    PUSH_STACK_RESULT(tarr->type,array_at(tarr,index));
-      //}
-      break;
+      la=ATOM_CAST(next);
+      tarr=(lisp_array*)la->data;
+      if(tarr->type!=LTARRAY)
+        return ret;
+      else
+      {
+        next=next->_next;
+
+        /*traverse the array through each of its dimensions*/
+        tarr=(lisp_array*)array_at(tarr,index);      
+        while(tarr&&tarr->type==LTARRAY)
+        {
+          next=next->_next;
+          if(next&&ATOM_CAST(next)->type==LTINT)
+            index=*(int*)ATOM_CAST(next)->data;
+          else return ret;
+          tarr=(lisp_array*)array_at(tarr,index);
+        }
+        /*this will either be a terminal dimension (iee not LTARRAY) or null/nil*/
+        if(tarr&&next&&next->_next)
+          if(ATOM_CAST(next->_next)->type==LTINT&&
+             ATOM_CAST(next->_next)->data!=0)
+          {
+            ret.type=tarr->type;
+            ret.data=array_at(tarr,*(int*)ATOM_CAST(next->_next)->data);
+            return ret;
+          }
+      }
+      return ret;
     default:
       break;
   }
@@ -68,5 +78,5 @@ static lisp_atom lp_at(slist_elem* next)
 
 void load_access()
 {
-  lisp_install_symbol("at",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,2,2,lp_at)),0);
+  lisp_install_symbol("at",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,2,CFN_ARGNOCIEL,lp_at)),0);
 }

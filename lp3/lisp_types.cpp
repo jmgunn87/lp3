@@ -152,9 +152,7 @@ lisp_array* new_lisp_array(LISP_TYPE type,
   lisp_array* la=(lisp_array*)malloc(sizeof(lisp_array));
   la->type=type;
   la->length=length;
-  if(!data)  
-    la->data=calloc(length,sizeof(void*));
-  else la->data=data;
+  la->data=data;
   return la;
 }
 

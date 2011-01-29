@@ -149,25 +149,32 @@ void lisp_repl()
 //  return 1;
 //}
 
-//lisp_array* md_array()
-//{
-//  int r=0;
-//  int c=0;
-//  lisp_array* arr=0;
-//  int** table=(int**)malloc(sizeof(int*)*5);
-//  for(;r<5;++r)
-//  {
-//    table[r]=(int*)malloc(sizeof(int)*5);
-//    for(c=0;c<5;++c)
-//      table[r][c]=c;
-//  }
-//
-//  arr=new_lisp_array(LTARRAY,5,0);
-//  lisp_install_symbol("table",new_atom(LTARRAY,(void*)arr),0);
-//  for(r=0;r<5;++r)
-//    ((lisp_array**)arr->data)[0]=new_lisp_array(LTINT,5,(void*)&table[r]);
-//  return arr;
-//}
+lisp_array* md_array()
+{
+  int r=0;
+  int c=0;
+  lisp_array* arr=0;
+  int** table=(int**)malloc(sizeof(int*)*5);
+  for(;r<5;++r)
+  {
+    table[r]=(int*)malloc(sizeof(int)*5);
+    for(c=0;c<5;++c)
+      table[r][c]=c;
+  }
+
+  
+  arr=new_lisp_array(LTARRAY,5,0);
+  arr->data=(lisp_array**)calloc(5,sizeof(lisp_array*));
+  for(r=0;r<5;++r)
+  {
+    ((lisp_array**)arr->data)[r]=new_lisp_array(LTINT,5,(void*)calloc(5,sizeof(int)));
+    for(c=0;c<5;++c)
+      ((int*)((lisp_array**)arr->data)[r]->data)[c]=table[r][c];
+  }
+
+  lisp_install_symbol("table",new_atom(LTARRAY,(void*)arr),0);
+  return arr;
+}
 
 
 
@@ -185,6 +192,8 @@ int _tmain(int argc, _TCHAR* argv[])
   load_io();
   load_access();
   load_utils();
+
+  md_array();
 
   lisp_repl();
   

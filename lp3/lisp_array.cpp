@@ -2,8 +2,6 @@
 #include "stdafx.h"
 #include "lisp_array.h"
 
-
-
 void array_type_depth(const lisp_array* larray,
                       LISP_TYPE* type,
                       int* depth)
@@ -47,11 +45,11 @@ void* array_at(lisp_array* la,
 
   switch(la->type)
   {
+    case LTARRAY:return (void*)((lisp_array**)la->data)[index];
     case LTID:
     case LTSTR:return (void*)&((char**)la->data)[index];
     case LTINT:return (void*)&((int*)la->data)[index];
-    case LTFLOAT:return (void*)&((float*)la->data)[index];
-    //case LTARRAY:return (void*)((lisp_array**)la->data)[index];
+    case LTFLOAT:return (void*)&((float*)la->data)[index];    
     case LTLIST:return (void*)((slist**)la->data)[index];
     case LTLISPFN:return (void*)((slist**)la->data)[index];
     case LTLISPMACRO:return (void*)((slist**)la->data)[index];
