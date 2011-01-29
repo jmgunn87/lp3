@@ -53,6 +53,10 @@ static lisp_atom lp_not(slist_elem* next)
 }
 static lisp_atom lp_if(slist_elem* next)
 {
+  lisp_atom ret;
+  ret.type=LTNIL;
+  ret.data=(void*)LTNIL;
+
   /**************************************
    * evaluate the condition and execute *
    * the correct branch                 *
@@ -60,7 +64,9 @@ static lisp_atom lp_if(slist_elem* next)
   lisp_atom atom=lisp_eval(ATOM_CAST(next),0);
   if(atom_truth(&atom))
     return lisp_eval(ATOM_CAST(next->_next),0);
-  return lisp_eval(ATOM_CAST(next->_next->_next),0);
+  if(next->_next->_next)
+    return lisp_eval(ATOM_CAST(next->_next->_next),0);
+  return ret;
 }
 
 static lisp_atom lp_do(slist_elem* next)
@@ -163,7 +169,7 @@ void load_flow()
   lisp_install_symbol("&&",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_and)),0);
   lisp_install_symbol("or",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_or)),0);
   lisp_install_symbol("||",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_or)),0);
-  lisp_install_symbol("if",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,3,3,lp_if)),0);
+  lisp_install_symbol("if",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,2,3,lp_if)),0);
   lisp_install_symbol("not",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,1,1,lp_not)),0);
   lisp_install_symbol("while",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,2,2,lp_do)),0);
 }

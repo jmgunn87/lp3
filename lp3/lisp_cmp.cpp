@@ -65,6 +65,32 @@ static char cmp_str(char* lval,
 
   return 0;
 }
+
+//static char cmp_list(slist* lval,
+//                     slist* rval,
+//                     CMP_OP op)
+//{
+//  slist_elem* lle=0;
+//  slist_elem* rle=0;
+//
+//  if(!lval||lval->_size<1||
+//     !rval||rval->_size<1)
+//    return 0;
+//
+//  //do a quick rejection/acceptance test on thier sizes
+//  if(lval->_size==rval->_size)
+//    return 1;
+//
+//  lle=lval->_head;
+//  rle=rval->_head;
+//
+//  while(lle&&rle)
+//  {
+//  }
+//  
+//
+//}
+
 static lisp_atom lp_cmp(slist_elem* next,
                         CMP_OP op)
 {

@@ -11,6 +11,7 @@
 #include "lisp_io.h"
 #include "lisp_access.h"
 #include "lisp_utils.h"
+#include "lisp_string.h"
 
 /* REPL */
 void lisp_repl()
@@ -184,6 +185,11 @@ int _tmain(int argc, _TCHAR* argv[])
   int auth=0;
   char name[256];
   memset((void*)name,0,256);
+
+
+  lp_format("test~2Tstring!~3%",0);
+  getchar();
+  
 
   load_symanip();
   load_math_module();
