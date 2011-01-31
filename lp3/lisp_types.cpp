@@ -2,9 +2,12 @@
 #include "stdafx.h"
 #include "lisp_types.h"
 
-lisp_atom* new_atom(LISP_TYPE type, void* data)
+lisp_atom* new_atom(LEVAL_TYPE et,
+                    LISP_TYPE type,
+                    void* data)
 {
   lisp_atom* la=(lisp_atom*)malloc(sizeof(lisp_atom));
+  la->eval_type=et;
   la->type=type;
   la->data=data;
   return la;
@@ -16,10 +19,11 @@ lisp_atom* atom_copy(lisp_atom* atom)
   slist_elem* tle=0;
   lisp_atom* copy=0;
 
-  copy=new_atom(LTNIL,(void*)LTNIL);
+  copy=new_atom(LENORMAL,LTNIL,(void*)LTNIL);
   if(!atom)
     return copy;
 
+  (*copy).eval_type=atom->eval_type;
   switch(atom->type)
   {
   case LTTRUE:
@@ -156,3 +160,13 @@ lisp_array* new_lisp_array(LISP_TYPE type,
   return la;
 }
 
+void load_types()
+{
+  /*lisp_install_symbol("constant",(void*)new_atom(LTCFNPTR,0,0);
+  lisp_install_symbol("string",(void*)new_atom(LTCFNPTR,0,0);
+  lisp_install_symbol("int",(void*)new_atom(LTCFNPTR,0,0);
+  lisp_install_symbol("float",(void*)new_atom(LTCFNPTR,0,0);
+  lisp_install_symbol("id",(void*)new_atom(LTCFNPTR,0,0);
+  lisp_install_symbol("list",(void*)new_atom(LTCFNPTR,0,0);
+  lisp_install_symbol("array",(void*)new_atom(LTCFNPTR,0,0);*/
+}

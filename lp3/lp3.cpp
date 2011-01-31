@@ -31,7 +31,7 @@ void lisp_repl()
     printf(">");
     memset((void*)input,0,256);
     fgets(input,254,console);
-    lisp_in=parse_lisp((const char*)input,0);
+    lisp_in=lisp_read((const char*)input);
     if(lisp_in)
     {
       sle=lisp_in->_head;
@@ -39,27 +39,6 @@ void lisp_repl()
       {
         ret=lisp_eval((lisp_atom*)sle->_data,sle->_next);
         sle=sle->_next;
-        //switch(ret.type)
-        //{
-        //case LTTRUE:
-        //  printf("T\n");
-        //  break;
-        //case LTNIL:
-        //  printf("NIL\n");
-        //  break;
-        //case LTINT:
-        //  printf("%d\n",*(int*)ret.data);
-        //  break;
-        //case LTFLOAT:
-        //  printf("%f\n",*(float*)ret.data);
-        //  break;
-        //case LTID:
-        //case LTSTR:
-        //  printf("%s\n",(char*)ret.data);
-        //  break;
-        //default:
-        //  break;
-        //}
         printf("\n");
       }
     }
@@ -173,7 +152,7 @@ lisp_array* md_array()
       ((int*)((lisp_array**)arr->data)[r]->data)[c]=table[r][c];
   }
 
-  lisp_install_symbol("table",new_atom(LTARRAY,(void*)arr),0);
+  lisp_install_symbol("table",new_atom(LENORMAL,LTARRAY,(void*)arr),0);
   return arr;
 }
 
@@ -186,11 +165,23 @@ int _tmain(int argc, _TCHAR* argv[])
   char name[256];
   memset((void*)name,0,256);
 
+  char* one="one";
+  char* two="two";
+  int ione=1;
+  int i2=2;
+
+  lisp_atom* lst=new_atom(LEQUOTE,LTLIST,(void*)new_slist());
+  slist_append((slist*)lst->data,(void*)new_atom(LENORMAL,LTINT,(void*)&ione));
+  slist_append((slist*)lst->data,(void*)new_atom(LENORMAL,LTINT,(void*)&ione));
+  slist_append((slist*)lst->data,(void*)new_atom(LENORMAL,LTINT,(void*)&i2));
+  lisp_install_symbol("lst",(void*)lst,0);
+
+ 
 
   lp_format("test~2Tstring!~3%",0);
-  getchar();
-  
+//  getchar();
 
+  load_types();
   load_symanip();
   load_math_module();
   load_cmp();

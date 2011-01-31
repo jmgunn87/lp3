@@ -26,8 +26,13 @@ void slist_append_at(slist* list,
                      int index,
                      void* data);
 
+slist_elem* slist_elem_at(slist* list,
+                          int index);
 void* slist_at(slist* list,
                int index);
+slist* slist_range(slist* list,
+                   int from,
+                   int to);
 
 unsigned char slist_remove_at(slist* list,
                               int index);

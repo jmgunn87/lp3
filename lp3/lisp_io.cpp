@@ -26,9 +26,10 @@ static lisp_atom lp_echo(slist_elem* next)
         fprintf(lp_stream,"NIL");
         break;
       case LTID:
-        if(lisp_get_symbol((const char*)atom->data,(void**)&atom,0))
-          continue;
-        else fprintf(lp_stream,"%s",atom->data);
+        if(atom->eval_type!=LEQUOTE)
+          if(lisp_get_symbol((const char*)atom->data,(void**)&atom,0))
+            continue;
+        fprintf(lp_stream,"%s",atom->data);
         break;
       case LTSTR:
         fprintf(lp_stream,"%s",atom->data);
@@ -103,7 +104,7 @@ static lisp_atom lp_close_stream(slist_elem* next)
 
 void load_io()
 {
-  lisp_install_symbol("write",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_echo)),0);
-  lisp_install_symbol("set-stream",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,2,2,lp_set_stream)),0);
-  lisp_install_symbol("close-stream",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,0,lp_close_stream)),0);
+  lisp_install_symbol("write",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_echo)),0);
+  lisp_install_symbol("set-stream",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,2,2,lp_set_stream)),0);
+  lisp_install_symbol("close-stream",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,0,0,lp_close_stream)),0);
 }

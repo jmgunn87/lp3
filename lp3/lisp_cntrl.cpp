@@ -165,11 +165,11 @@ static lisp_atom lp_or(slist_elem* next)
 
 void load_flow()
 {
-  lisp_install_symbol("and",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_and)),0);
-  lisp_install_symbol("&&",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_and)),0);
-  lisp_install_symbol("or",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_or)),0);
-  lisp_install_symbol("||",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_or)),0);
-  lisp_install_symbol("if",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,2,3,lp_if)),0);
-  lisp_install_symbol("not",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,1,1,lp_not)),0);
-  lisp_install_symbol("while",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,2,2,lp_do)),0);
+  lisp_install_symbol("and",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_and)),0);
+  lisp_install_symbol("&&",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_and)),0);
+  lisp_install_symbol("or",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_or)),0);
+  lisp_install_symbol("||",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,0,CFN_ARGNOCIEL,lp_or)),0);
+  lisp_install_symbol("if",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(0,2,3,lp_if)),0);
+  lisp_install_symbol("not",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,1,1,lp_not)),0);
+  lisp_install_symbol("while",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(0,2,2,lp_do)),0);
 }

@@ -34,15 +34,19 @@ void slist_append(slist* list,
     return;
   }
 
-  /*add in support for caching*/
-  pos=list->_tail;
-  if(pos->_next)
-  {
-    (*(*pos)._next)._data=data;
-    (*list)._tail=pos->_next;
-    (*list)._size+=1;
-    return;
-  }
+  ///*add in support for caching*/
+  //pos=list->_tail;
+  //if(pos->_next)
+  //{
+  //  (*(*pos)._next)._data=data;
+  //  (*list)._tail=pos->_next;
+  //  (*list)._size+=1;
+  //  return;
+  //}
+  pos=list->_head;
+  while(pos&&pos->_next)
+    pos=pos->_next;
+
   /*allocate a new element*/
   (*pos)._next=(slist_elem*)malloc(sizeof(slist_elem));
   memset((void*)(*pos)._next,0,sizeof(slist_elem));
@@ -86,32 +90,77 @@ void slist_append_at(slist* list,
   return;
 }
 
+slist_elem* slist_elem_at(slist* list,
+                          int index)
+{
+  slist_elem* pos=list->_head;
+  int x=1;
+  if(!list||!list->_size||index>list->_size)
+    return 0;
+  //iterate
+  for(;pos->_next,x<=list->_size;pos=pos->_next,++x)
+    if(x==index)
+      return pos;
+  return 0;
+}
+
 void* slist_at(slist* list,
                int index)
 {
   slist_elem* pos=list->_head;
   int x=1;
-  if(!list||!list->_size||index>list->_size)return 0;
+  if(!list||!list->_size||index>list->_size)
+    return 0;
   //iterate
   for(;pos->_next,x<=list->_size;pos=pos->_next,++x)
-    if(x==index)return pos->_data;
+    if(x==index)
+      return pos->_data;
   return 0;
 }
+slist* slist_range(slist* list,
+                   int from,
+                   int to)
+{
+  slist* ret=0;
+  slist_elem* it=0;
 
+  if(!list)
+    return ret;
+  if(from>list->_size||
+     to>list->_size||to<from)
+    return ret;
+
+  it=slist_elem_at(list,from);
+  if(!it)
+    return ret;
+
+  to-=from;
+  ret=new_slist();
+  while(it&&to)
+  {
+    slist_append(ret,it->_data);
+    it=it->_next;
+    --to;
+  }
+  return ret;
+}
 unsigned char slist_remove_at(slist* list,
                               int index)
 {
   int x=1;
   slist_elem* pos=list->_head;
   slist_elem* temp=0;
-  if(!list||!list->_size||index>list->_size)return 0;
+  if(!list||!list->_size||index>list->_size)
+    return 0;
   //iterate to one before element and remove the next element
   for(;pos->_next,x<list->_size;pos=pos->_next,++x)
     if(x==index-1)
     {
-      if(!pos->_next)return 0;
+      if(!pos->_next)
+        return 0;
       if(pos->_next&&pos->_next->_next)
         temp=pos->_next->_next;
+
       (*pos)._next->_data=0;
       free((*pos)._next);
       (*pos)._next=temp?temp:0;

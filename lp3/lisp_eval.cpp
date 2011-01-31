@@ -46,6 +46,19 @@ lisp_atom lisp_eval(lisp_atom* atom,
   ret_atom.data=0;
 
   while(atom&&atom->data)
+  {
+    /* check the eval type */
+    if(atom->eval_type==LEQUOTE)
+    {
+      ret_atom=*atom;
+      return ret_atom;
+    }
+    else if(atom->eval_type==LEBQUOTE)
+    {
+      ret_atom=*atom;
+      return ret_atom;
+    }
+
     switch(atom->type)
     {
     case LTID:
@@ -95,6 +108,7 @@ lisp_atom lisp_eval(lisp_atom* atom,
       ret_atom=*atom;
       return ret_atom;
     }
+  }
   return ret_atom;
 }
 

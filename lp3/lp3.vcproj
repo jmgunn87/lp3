@@ -187,6 +187,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\lisp_conv.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\lisp_eval.cpp"
 				>
 			</File>
@@ -208,6 +212,10 @@
 			</File>
 			<File
 				RelativePath=".\lisp_reader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\lisp_string.cpp"
 				>
 			</File>
 			<File
@@ -277,6 +285,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\lisp_conv.h"
+				>
+			</File>
+			<File
 				RelativePath=".\lisp_eval.h"
 				>
 			</File>
@@ -298,6 +310,10 @@
 			</File>
 			<File
 				RelativePath=".\lisp_reader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\lisp_string.h"
 				>
 			</File>
 			<File

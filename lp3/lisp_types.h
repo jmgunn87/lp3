@@ -4,6 +4,8 @@
 #pragma once
 #include "lisp_symtbl.h"
 
+void load_types();
+
 #define IS_LTYPE(a,t)( ((lisp_atom*)a)->type==t )
 #define ATOM_CAST(sle)( ((lisp_atom*)sle->_data) )
 
@@ -23,14 +25,29 @@ typedef enum _LISP_TYPE
 
 } LISP_TYPE;
 
+typedef enum _LEVAL_TYPE
+{
+  LENORMAL,
+  LEQUOTE,
+  LEBQUOTE,
+  LECOMMA,
+  LECOMMA_AT,
+  LEAT
+
+} LEVAL_TYPE;
+
 typedef struct _lisp_atom
 {
+  LEVAL_TYPE eval_type;/* indicates wether or 
+                          not this atom should be evaluated  */
   LISP_TYPE type;
   void* data;
 
 } lisp_atom; 
 
-lisp_atom* new_atom(LISP_TYPE type, void* data);
+lisp_atom* new_atom(LEVAL_TYPE et,
+                    LISP_TYPE type,
+                    void* data);
 lisp_atom* atom_copy(lisp_atom* atom);
 void atom_destroy(lisp_atom* atom);
 

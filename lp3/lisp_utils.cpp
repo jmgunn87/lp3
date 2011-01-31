@@ -51,6 +51,6 @@ static lisp_atom lp_length(slist_elem* next)
 }
 void load_utils()
 {
-  lisp_install_symbol("sleep",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,1,1,lp_sleep)),0);
-  lisp_install_symbol("length",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,1,1,lp_length)),0);
+  lisp_install_symbol("sleep",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,1,1,lp_sleep)),0);
+  lisp_install_symbol("length",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,1,1,lp_length)),0);
 }

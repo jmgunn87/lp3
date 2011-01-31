@@ -38,7 +38,7 @@ static lisp_atom lp_defun_or_macro(slist_elem* next,
   slist_append(def_list,(void*)ATOM_CAST(next->_next->_next)->data);
 
   /* install macro or fn */
-  if(!lisp_install_symbol(sym,new_atom(is_fn?LTLISPFN:LTLISPMACRO,(void*)def_list),0))
+  if(!lisp_install_symbol(sym,new_atom(LENORMAL,is_fn?LTLISPFN:LTLISPMACRO,(void*)def_list),0))
     return ret;
 
   ret.type=LTID;
@@ -142,12 +142,12 @@ static lisp_atom lp_destroy(slist_elem* next)
 void load_symanip()
 {
   //remember
-  lisp_install_symbol("destroy",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,1,CFN_ARGNOCIEL,&lp_destroy)),0);
-  lisp_install_symbol("forget",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,1,CFN_ARGNOCIEL,&lp_undefine)),0);
-  lisp_install_symbol("exists",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,1,CFN_ARGNOCIEL,&lp_exists)),0);
-  lisp_install_symbol("macro",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,3,3,&lp_defmacro)),0);
-  lisp_install_symbol("process",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,3,3,&lp_defun)),0);
-  lisp_install_symbol("variable",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(1,2,2,&lp_defvar)),0);
-  lisp_install_symbol("is",(void*)new_atom(LTCFNPTR,(void*)new_lisp_cfn(0,2,2,lp_setf)),0);
+  lisp_install_symbol("destroy",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(0,1,CFN_ARGNOCIEL,&lp_destroy)),0);
+  lisp_install_symbol("forget",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(0,1,CFN_ARGNOCIEL,&lp_undefine)),0);
+  lisp_install_symbol("exists",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(0,1,CFN_ARGNOCIEL,&lp_exists)),0);
+  lisp_install_symbol("macro",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(0,3,3,&lp_defmacro)),0);
+  lisp_install_symbol("function",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(0,3,3,&lp_defun)),0);
+  lisp_install_symbol("variable",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(1,2,2,&lp_defvar)),0);
+  lisp_install_symbol("is",(void*)new_atom(LENORMAL,LTCFNPTR,(void*)new_lisp_cfn(0,2,2,lp_setf)),0);
 //  lisp_install_symbol("let",(void*)new_atom(LTCFNPTR,(void*)&lp_let),0);
 }
